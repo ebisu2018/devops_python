@@ -1,0 +1,27 @@
+概要总结
+python适合做运维开发，AI等领域，社区有丰富的库，模块
+pyhon是跨平台的，只要下载对应操作系统的虚拟机即可运行python
+python3开始，pip（包管理工具）就集成在安装python的包中
+
+linux系统上安装多版本python3
+yum install python36 python38
+
+查看版本
+python -V
+
+如果要切换其他版本python3
+alternatives --config python3
+
+使用pip安装包，连接到pypi安装，如果国内下载网速慢，可以修改pypi的源
+pip3 install <pkg>
+
+安装虚拟环境，用于隔离环境
+pip3 install virtualenv
+
+用当前python版本创建虚拟环境
+virtualenv <project name>
+
+进入虚拟环境目录
+激活虚拟环境，source bin/activate
+退出虚拟环境，deactivate
+
