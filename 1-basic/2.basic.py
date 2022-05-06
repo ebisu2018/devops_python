@@ -66,5 +66,3 @@ print(float('1.23'))
 print(type(a) == str)
 # 推荐写法
 print(isinstance(1, (bool, str, int)))
-
-print(1, 2, 3)
