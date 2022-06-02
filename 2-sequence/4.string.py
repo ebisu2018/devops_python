@@ -123,3 +123,11 @@ for i in x:
 
 for i in y:
     print(id(i))
+
+
+'''
+居中打印
+'''
+print(1, 'central'.center(30, '#'))
+print(2, '{:#^30}'.format('central'))
+print(3, '{:#^{}}'.format('central', 30))

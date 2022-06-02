@@ -23,6 +23,7 @@ def login_account():
     else:
         print('Locked')
 
+# login_account()
 
 '''
 3. 求100以内奇数的和
@@ -75,7 +76,6 @@ print()
 核心是找空格的规律，3210123，可以用range(-3, 4)取出
 3是总数7的地板除
 星号的规律是 总数-2*空格数的绝对值
-
 '''
 n = 7
 e = 7 // 2
@@ -87,10 +87,47 @@ print()
 for i in range(-e, e + 1):
     print('{:^{}}'.format('*' * (n - 2 * abs(i)), n))
 
-'''
-居中打印
-'''
-print(1, 'central'.center(30, '#'))
-print(2, '{:#^30}'.format('central'))
-print(3, '{:#^{}}'.format('central', 30))
 
+'''
+6. 对3个整数进行大小比较，升序输出
+'''
+def sort_abc():
+    a = int(input('a: '))
+    b = int(input('b: '))
+    c = int(input('c: '))
+    if a > b:
+        if c > a:
+            print(c, a, b)
+        elif c < a and c > b:
+            print(a, c, b)
+        else:
+            print(a, b, c)
+    else:
+        if c > b:
+            print(c, b, a)
+        elif b > c and c > a:
+            print(b, c, a)
+        else:
+            print(b, a, c)
+# sort_abc()
+
+
+'''
+7. 基于一个列表生成一个新列表，元素是第一个相邻2项的和
+'''
+l1 = [1, 4, 9, 16, 25, 36]
+l2 = [l1[i] + l1[i + 1] for i in range(len(l1) - 1)]
+print(l2)
+
+
+'''
+8. 随机生成100个产品ID
+数字6位，分隔符号，10个随机小写英文
+'''
+import string
+import random
+
+alphabet = string.ascii_lowercase
+for i in range(10):
+    prod_id = "{:0>6}.{}".format(i, ''.join(random.choices(alphabet, k=10)))
+    print(prod_id)
