@@ -21,6 +21,12 @@ yield可以一次或者多次，但最好是多次，一次还不如用return
 1 生成器表达式 (i for i in range(n))
 2 有yield关键字的生成器函数
 
+
+函数因为有了yield可以中断函数执行，期间执行另一个函数的yield，协程的本质
+
+yield是返回一个惰性的对象
+yield from后面跟的是一个可迭代对象，可以用map的方式一一取出
+
 '''
 
 
@@ -33,6 +39,7 @@ g = gen()
 print(gen)
 print(gen()) # 返回的是generator
 
+# for里面会自动调用next方法
 for i in g:
     print(i)
 
@@ -78,4 +85,21 @@ for i in range(10):
     print(i + 1, next(f))
 
 
+def foo():
+    yield from range(20, 26)
 
+
+for i in foo():
+    print(i)
+
+
+def bar():
+    yield from map(lambda x: x + 1, range(10, 16))
+
+
+# 协程
+f = foo()
+b = bar()
+for i in range(5):
+    print(next(f))
+    print(next(b))
