@@ -76,32 +76,17 @@ def add(a, b):
     return a + b
 
 
-# 装饰器A，参数写在参数中
-def logger(fn, *args, **kwargs):
-    start = datetime.datetime.now()
-    print('before', fn.__name__, args, kwargs)
-    ret = fn(*args, **kwargs) # 必须要解构，否则会变成元组和字典，元函数不会接受！
-    print('end')
-    end = datetime.datetime.now()
-    print((end - start).total_seconds())
-    return ret
-
-
-print(logger(add, 4, b=6))
 print('###############')
 
 
-# 也可以使用functools中的函数
 from functools import update_wrapper, wraps
+
 
 # 装饰器B，参数写在内部函数中，外层函数只传递函数对象
 def logger(wrapped):
 
     @wraps(wrapped)  # 等价于 wrapper = wraps(wrapped)(wrapper)
     def wrapper(*args, **kwargs):
-        '''
-        A function document
-        '''
         print('before', args, kwargs)
         ret = wrapped(*args, **kwargs) # 必须要解构，否则会变成元组和字典
         print('end')
