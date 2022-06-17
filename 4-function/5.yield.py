@@ -1,6 +1,6 @@
 '''
 
-生成器表达式只能写简单的表达式，由一条表达式构成
+生成器表达式只能写简单的表达式，由一条表达式构成 (i for i in range(n))
 如果需要构建复杂的函数，则用生成器函数
 
 生成器函数
@@ -8,7 +8,7 @@
 如果用next方法，碰到return后会抛出异常
 如果有多个yield，每一次会暂停在yield处
 可以构建出无限个元素的容器
-yield可以一次或者多次，但最好是多次，一次还不如用return
+yield可以一次或者多次，但最好是多次，一次还不如return
 
 生成器对象特点：
 也属于可迭代对象
@@ -20,7 +20,6 @@ yield可以一次或者多次，但最好是多次，一次还不如用return
 生成器对象构造：
 1 生成器表达式 (i for i in range(n))
 2 有yield关键字的生成器函数
-
 
 函数因为有了yield可以中断函数执行，期间执行另一个函数的yield，协程的本质
 
@@ -60,8 +59,9 @@ def foo():
         while True:
             count += 1
             yield count
-    c = bar() # 返回生成器对象
-    return lambda: next(c) #lambda返回对生成器的next方法
+    c = bar()  # 返回生成器对象
+    return lambda: next(c)  #lambda返回对生成器的next方法
+
 
 x = foo()
 print(x)

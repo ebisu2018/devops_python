@@ -2,7 +2,7 @@
 
 python是动态类型语言
 类型出现问题时只有在运行的时候发现，因此危险，难理解阅读
-建议在写时候加上类型注解
+建议在写时候加上类型注解！
 
 annotation，类型注解，非强制性的
 用于告诉阅读者该变量是什么类型返回值什么类型，不是强制类型语言，因此只是提示作用
@@ -15,22 +15,23 @@ __annotation__，是一个字典，包含了参数以及返回值的类型注解
 {'a': <class 'int'>, 'b': <class 'int'>, 'return': <class 'int'>}
 
 inspect模块
-调用inspect.signature(fn).parameters()，得到的是OrderedDict
-元素的value是Parameter对象，包含4个属性
-变量名name, 变量默认值default, 变量的类型注解annotation, 变量的参数类型kind
+调用inspect.signature(fn).parameters()，得到的是OrderedDict，key是变量名，值是Parameter对象
+包含4个属性
+变量名name, 变量默认值default, 变量类型注解annotation类型, 变量参数类型kind
 
 '''
 
 import inspect
 
 
+# 设定变量类型和返回值类型
 def add(a: int, b: int) -> int:
     return a + b
 
 
 print(add(3, 5))
 
-# 仅提示
+# 仅提示并不会报错
 print(add('a', 'b'))
 
 print(add.__annotations__)
@@ -46,13 +47,13 @@ c: str = 'abc'
 # 判断是否是函数
 print(inspect.isfunction(add))
 
-# 签名
+# 看函数签名
 sig = inspect.signature(add)
 print(sig)
 
-# 获取参数
+# 获取参数，参数对象是一个OrderedDict
 params = sig.parameters
-print(params)
+print(params)  # OrderedDict([('a', <Parameter "a: int">), ('b', <Parameter "b: int">)])
 print(params.keys())
 print(params.values())
 print(params.items())
@@ -79,7 +80,7 @@ def check(wrapped):
                 raise TypeError("{} = {} is False".format(p.name, i))
 
         for k, v in kwargs.items():
-            if params[k].annotation != inspect._emplty and not isinstance(v, params[k].annotation):
+            if params[k].annotation != inspect._empty and not isinstance(v, params[k].annotation):
                 raise TypeError("{} = {} is False".format(params[k].name, v))
 
         ret = wrapped(*args, **kwargs)
@@ -93,5 +94,5 @@ def add(x: int, y: int):
 
 
 print(add(5, 5))
-print(add('3', 7))
+# print(add('3', 7))
 # print(add(2, y='8'))

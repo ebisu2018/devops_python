@@ -37,30 +37,36 @@ print(f'100以内奇数的和是{total}')
 '''
 4. 求斐波那契数列
 '''
-a = 0
-b = 1
-print(b, end=' ')
-while True:
-    if a + b >= 10:
-        break
-    print(a + b, end=' ')
+# 普通版本
+def fib1(n):
+    a = b = 1
+    for i in range(n - 2):
+        a, b = b, a + b
+    return b
+
+print(fib1(10))
+
+
+# 生成器函数版本
+def fib2():
+    a = 1
+    yield a
+    b = 1
+    yield b
+    while True:
+        a, b = b, a + b
+        yield b
+
+
+# 递归版本
+def fib3(n, a=1, b=1):
+    if n < 3:
+        return b
     a, b = b, a + b
+    return fib3(n - 1, a, b)
 
-print()
 
-a = 0
-b = 1
-count = 1
-print(count, b, end=' ')
-while True:
-    count += 1
-    if count > 11:
-        break
-    a, b = b, a + b
-    print(count, b, end=' ')
-
-print()
-
+print(fib3(10))
 
 '''
 5. 打印菱形
