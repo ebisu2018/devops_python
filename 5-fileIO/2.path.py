@@ -108,14 +108,14 @@ print(p.exists())
 
 print(p.is_dir())
 
-# 创建文件夹
+# 创建文件夹, parents表示父目录必须存在，exist ok表示有目录不会提示
 p = Path('a/b')
 p.mkdir(parents=True, exist_ok=True)
 
 # 创建文件
 (p / 'nginx.tar').touch()
 
-# 遍历Path对象，不会递归调用
+# 遍历Path对象，不会递归查找
 for i in p.iterdir():
     print(i)
 

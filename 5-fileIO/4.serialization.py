@@ -48,9 +48,7 @@ with open('pickle.txt', 'rb') as fo:
     x = pickle.load(fo)
     print(x, type(x))
 
-
 print('Json'.center(30, '#'))
-
 
 import json
 
@@ -64,8 +62,8 @@ print(x, type(x))
 d1 = json.loads(x)
 print(d1)
 
-
 import msgpack
+
 x = msgpack.dumps(d)
 print(x, type(x))
 
@@ -75,3 +73,22 @@ print(y, type(y))
 print(msgpack, msgpack.__name__)
 
 print(msgpack.__file__)
+
+content = 'abd 123 ** 9 {. {"id":"10"} aaasd {"foo": {"id": [1234]}} aae 324'
+
+
+def extract_json_blobs(input_content):
+    for i in range(len(input_content)):
+        if input_content[i] == '{':
+            for j in range(len(input_content) - 1, i, -1):
+                if input_content[j] == '}':
+                    try:
+                        print(json.loads(content[i: j + 1]))
+                        # yield json.loads(content[i: j + 1])
+                        i = j
+                        break
+                    except json.JSONDecodeError as e:
+                        print(e)
+
+
+extract_json_blobs(content)
