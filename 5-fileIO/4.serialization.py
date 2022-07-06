@@ -8,8 +8,8 @@
 数据在内存中都是0和1，转换成16进制，如何解读数据取决于用什么方式打开
 数据在内存中需要有类型，数据，边界才能确保能被反序列化
 
-dump(obj, file)，是把内存的数据结构序列化到文件
-dumps(obj)，把内存的数据结构序列化成二进制
+dump(obj, file)，把数据结构序列化到文件
+dumps(obj)，把数据结构序列化成二进制
 load(file)，从文件中反序列化到数据结构
 loads(obj)，从序列化对象中反序列化到数据结构
 
@@ -34,6 +34,8 @@ msgpack序列化
 '''
 
 import pickle
+import json
+import msgpack
 
 l = 'a'
 with open('pickle.txt', 'wb') as fo:
@@ -50,8 +52,6 @@ with open('pickle.txt', 'rb') as fo:
 
 print('Json'.center(30, '#'))
 
-import json
-
 d = {'name': 'jose', 'color': 'blue', 'class': ['python'], 'interest': ('movie', 'music')}
 
 # 序列化成json
@@ -60,9 +60,17 @@ print(x, type(x))
 
 # 反序列化成python对象
 d1 = json.loads(x)
-print(d1)
+print(d1, type(d1))
 
-import msgpack
+with open('d.json', 'w') as f:
+    json.dump(d, f)
+
+with open('d.json', 'r') as f:
+    p = json.load(f)
+    print(p, type(p))
+
+
+print('msgpack'.center(30, '#'))
 
 x = msgpack.dumps(d)
 print(x, type(x))
@@ -92,3 +100,13 @@ def extract_json_blobs(input_content):
 
 
 extract_json_blobs(content)
+
+payload = ''
+filename = 'foldername/MyFilename.json'
+# filename = 'MyFilename'
+error_folder = 'error'
+new_filename = filename.replace('json', 'txt') if filename.endswith('.json') else f'{filename}.txt'
+part_list = new_filename.split('/')
+part_list.insert(-1, error_folder)
+error_path = '/'.join(part_list)
+print(error_path)
