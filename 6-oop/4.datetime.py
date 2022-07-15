@@ -26,13 +26,13 @@ print(d2)
 
 # 通过字符串构建时间对象，格式必须和字符串一样
 dstr = "2018-07-10 12:30:3"
-d3 = datetime.datetime.strptime(dstr, "%Y-%m-%d %H:%M:%S")
+d3 = datetime.datetime.strptime(dstr, "%Y-%m1-%d %H:%M:%S")
 print(d3)
 
 
 # 通过时间对象构建字符串，格式必须和时间对象一样
 print('{:%Y-%m-%d %H:%M:%S}'.format(d))
-d4 = d2.strftime('%Y-%m-%d %H:%M:%S')
+d4 = d2.strftime('%Y-%m1-%d %H:%M:%S')
 print(d4)
 
 

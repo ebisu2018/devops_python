@@ -17,7 +17,7 @@ print(root.level, root.getEffectiveLevel(), root.handlers)
 
 FORMAT ='%(asctime)s %(name)s %(threadName)s %(message)s'
 logging.basicConfig(
-    level=logging.INFO, format=FORMAT, datefmt="%Y%m%d%H:%M:%S"
+    level=logging.INFO, format=FORMAT, datefmt="%Y%m1%d%H:%M:%S"
     # filename='1.log' # 可以指定输出到文件，不加则输出到控制台
 )
 logging.info('test info')

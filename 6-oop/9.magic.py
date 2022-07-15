@@ -33,7 +33,7 @@ print(a, type(a))
 自定义对象的描述
 __str__, 返回的是对象的描述的字符串表示，必须返回的是字符串
 直接调用的时候使用，如果没有重写__str__，则执行父类的__str__
-print()方法本质就是调用的__str__,str()
+print()和str()方法本质就是调用的__str__
 
 __repr__，如果间接展示的调用的是repr方法，如果没有则调用__str__的，仍然没有则调用object的
 
@@ -53,10 +53,10 @@ class A:
 a = A(10)
 print([a, str(a), (a,), repr(a)])
 
-
 '''
 
 bool类型
+如果对实例进行bool判断则需要实现
 
 '''
 
@@ -64,9 +64,6 @@ class A:
 
     def __bool__(self):
         return False
-
-
-print(bool(A), bool(A()))
 
 
 '''
@@ -105,6 +102,8 @@ class A:
 '''
 
 实例之间做数学运算用的魔法方法
+比如datetime的模块
+可以对实例进行相加相减操作
 
 '''
 
@@ -132,7 +131,7 @@ class A:
 '''
 
 要实现容器的魔术方法
-实现一个购物车
+比如实现一个购物车
 
 '''
 
@@ -163,22 +162,142 @@ class Cart:
     def __getitem__(self, index):
         return self.__items[index]
 
-    # 允许通过索引修改
+    # 允许通过索引修改元素
     def __setitem__(self, key, value):
         self.__items[key] = value
 
+    # 允许向实例添加元素
     def __add__(self, other):
         return self.__items.append(other)
 
 
-cart = Cart()
-cart.additem('shoe')
-cart.additem('phone')
-print(len(cart))
-print(cart)
-for x in cart:
-    print(x)
+# cart = Cart()
+# cart.additem('shoe')
+# cart.additem('phone')
+# print(len(cart))
+# print(cart)
+# for x in cart:
+#     print(x)
+#
+# print(cart[1])
+# cart[0] = 'gun'
+# print(cart)
 
-print(cart[1])
-cart[0] = 'gun'
-print(cart)
+
+'''
+
+实例的可调用对象
+如果要实现实例的可调用，则要实现call方法
+
+callable()判断类或者实例是否可以调用
+
+'''
+
+class A:
+
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __call__(self, *args, **kwargs):
+        return repr(self)
+
+    def __str__(self):
+        return 'x:{}, y:{}'.format(self.x, self.y)
+
+    def __repr__(self):
+        return 'x-{}, y-{}'.format(self.x, self.y)
+
+
+# a = A(5, 10)
+# print(a)
+# print(a())
+
+
+'''
+
+实例的上下文管理
+当使用with对实例进行上下文管理时
+需要实现enter和exit方法
+
+如果想在start之前做一些增强可以放到enter中
+类似装饰器的道理
+
+'''
+
+class A:
+
+    def __init__(self):
+        print('step init')
+
+    def __enter__(self):
+        print('step enter')
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        print('step exit')
+
+
+# with A():
+#     print('with start')
+#     print('with end')
+
+
+'''
+
+反射
+通过一个对象，找到type，class，attribute或method
+可以使用字符串属性来调用getattr或者setattr进行取值和赋值
+hasattr来判断是否包含属性
+
+类中的魔术方法
+__getattribute__: 属性访问第一站，比__dict__访问还要早
+如果需要对属性包装可以调用该方法
+不建议调用，要调用父类的方法！
+
+__getattr__
+用于拦截AttributeError的
+如果在父类的__dict__中依然找不到属性，会调用该方法，可以返回一个值，而不会抛出AttributeError
+
+__setattr__
+如果有setattr()或者实例.属性，都会触发该方法
+如果方法中依然用实例.属性赋值，则会产生递归
+一般调用父类的或者用字典方式赋值
+
+del 实例.属性，会触发__delattr__，不常用
+
+
+'''
+
+class A:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    # 没有找到属性的时候会调用
+    def __getattr__(self, item):
+        return None
+
+    # 属性赋值的时候会调用
+    # def __setattr__(self, key, value):
+    #     super().__setattr__(key, value)
+        # 或者用字典的方式赋值
+        # self.__dict__[key] = value
+
+    # 删除属性,调用的方法
+    # def __delattr__(self, item):
+    #     super().__delattr__(item)
+
+    def __getattribute__(self, item):
+        return super().__getattribute__(item)
+
+
+a = A(10, 20)
+# print(getattr(a, 'x'))
+# print(getattr(a, 'y'))
+# 在类外面动态创建方法,调用方法
+# setattr(A, 'showme', lambda self: '{}, {}'.format(self.x, self.y))
+# print(getattr(a, 'showme')())
+# 判断对象是否有属性
+# print(hasattr(a, 'a'))
+
+print(a.x, a.a, a.__dict__)
