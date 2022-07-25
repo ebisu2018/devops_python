@@ -5,12 +5,11 @@ dict，字典，mapping
 字典是可变，无序，key不重复的键值对数据类型
 
 key是可hash类型，确保唯一，同时查找效率很高
-字典使用key来判断是效率最高的，时间复杂度是O(n)
+字典使用key来判断是效率最高的，时间复杂度是O(1)
 
 字典查找
 dict[key], key in dict，dict.get(key, default)，len(dict)
-
-dict.setdefault(key, value), 如果key有就返回值，没有则更新并返回值
+dict.setdefault(key, value), 如果key有就返回值，没有则更新字典并返回value
 如果不指定默认值则返回None
 
 删除
@@ -20,6 +19,8 @@ dict.clear(), 清空字典内容
 
 更新字典
 dict.update()，更新字典，和构造类似，可以指定可迭代对象或者关键字参数
+dict.setdefault(key, value), 如果key有就返回值，没有则更新字典并返回value
+如果不指定默认值则返回None
 
 遍历字典其实遍历的就是key
 可以指定keys(), values(), items()
@@ -39,7 +40,7 @@ python3.6之前，字典是无序的，使用OrderedDict来表示有序字典
 '''
 
 from collections import OrderedDict
-
+print('空字典'.center(30, '#'))
 
 # 构造空字典
 d1 = {}
@@ -47,7 +48,9 @@ d2 = dict()
 print(d1, d2, dict([]), dict({}), dict(()))
 
 
-# 构造带元素的字典，必须是在可迭代对象中，每个元素是二元组代表kv结构
+print('带元素的字典'.center(30, '#'))
+
+# 构造带元素的字典，必须是在可迭代对象中，列表中每个元素是二元组代表kv结构
 d3 = dict([('a', 1), ['b', 2]])
 print(d3)
 
@@ -61,17 +64,23 @@ print(d5)
 # value指向同一个对象，不要用这个
 print(dict.fromkeys('abcdef', [1]))
 
-# 如果没有不会异常，可以指定返回内容，默认是None
+print('查找'.center(30, '#'))
+# 如果没有找到，不会异常，可以指定返回内容，默认是None
 print(d5.get('x', 'NA'))
 
+
+print('set default'.center(30, '#'))
 print(d5.setdefault('x', 100))
 print(d5.setdefault('a', 20))
 print(d5)
 
 
+print('pop()'.center(30, '#'))
 print(d5.pop('a'))
 print(d5)
 
+
+print('遍历'.center(30, '#'))
 for k in d5:
     print(k, d5[k])
 
@@ -87,3 +96,9 @@ for item in d5.items():
 
 for k, v in d5.items():
     print(k, v)
+
+
+print('OrderedDict')
+
+od = OrderedDict([('a', 1), ('b', 2), ('c', 3)])
+print(od)
