@@ -37,7 +37,7 @@ addr = ('127.0.0.1', 9999)
 # 绑定到服务端
 server.bind(addr)
 
-# 开启服务端监听，不会阻塞
+# 开启服务端监听，不会阻塞，做三次握手的搭链接
 server.listen()
 
 # 阻塞方法，等待连接，如果有连接来则返回新的socket对象
@@ -45,14 +45,25 @@ newsock, raddr = server.accept()
 print(newsock, raddr)
 print(newsock.getpeername())
 print(newsock.getsockname())
+print('accept'.center(30, '#'))
 
-
-# # 接受数据，是阻塞方法
+# 1. 用recv和send的方法
+# # 接受数据，是阻塞方法，没收到数据会一直等，直到收到数据会返回
 data = newsock.recv(1024)
 print(type(data), data)
 
-# # 发送数据
-newsock.send(f'!!!!{data}!!!'.encode())
+# # 发送数据给客户端
+newsock.send(f'!!!!{data.decode()}!!!'.encode())
+
+print('makefile'.center(30, '#'))
+# 2. 用makefile的rw方法作为文件对象读写
+nf = server.makefile('rw')
+data_str = nf.read(5)
+print(type(data_str), data_str)
+
+nf.write('ACK')
+nf.close()
 
 # # 关闭socket连接
+newsock.close()
 server.close()

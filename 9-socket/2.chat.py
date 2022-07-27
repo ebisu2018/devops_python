@@ -1,3 +1,9 @@
+'''
+
+点到点聊天通信
+
+'''
+
 import socket
 import threading
 
