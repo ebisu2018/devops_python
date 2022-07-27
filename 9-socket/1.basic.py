@@ -57,7 +57,8 @@ newsock.send(f'!!!!{data.decode()}!!!'.encode())
 
 print('makefile'.center(30, '#'))
 # 2. 用makefile的rw方法作为文件对象读写
-nf = server.makefile('rw')
+nf = newsock.makefile('rw')
+print(f'nf is {nf}')
 data_str = nf.read(5)
 print(type(data_str), data_str)
 
@@ -65,5 +66,5 @@ nf.write('ACK')
 nf.close()
 
 # # 关闭socket连接
-newsock.close()
+# newsock.close()
 server.close()
