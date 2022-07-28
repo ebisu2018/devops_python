@@ -1,6 +1,8 @@
 '''
 
-点到点聊天通信
+聊天通信
+
+因为accept和recv方法是阻塞当前线程的，因此需要放到线程中
 
 '''
 
@@ -29,10 +31,14 @@ class ChatServer:
 
     def recv(self, sock, raddr):
         while not self.event.is_set():
-            data = sock.recv(1024)
+            try:
+                data = sock.recv(1024)
+            except:
+                print('Error')
+                data = b''
             if data == b'' or data == b'q':
                 break
-            sock.send('from {}, data is {}'.format(*raddr, data).encode())
+            sock.send('from {}:{}, data is {}'.format(*raddr, data).encode())
 
     def stop(self):
         self.event.set()
@@ -47,3 +53,4 @@ if __name__ == '__main__':
         if cmd == 'q':
             cs.stop()
             break
+        print(threading.enumerate())
