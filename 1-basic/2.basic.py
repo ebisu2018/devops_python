@@ -43,6 +43,9 @@ print默认用空格分割，末尾有回车，可以指定sep，end，file参�
 
 '''
 
+import decimal
+from fractions import Fraction
+
 a = 100
 b = 200
 c = 'abc'
@@ -67,3 +70,13 @@ print(type(a) == str)
 # 类型判断推荐写法
 print(isinstance(1, (bool, str, int)))
 print(1, 2, 3, sep='\t', end='\n\n')
+
+print(0x45, 0o26)
+print(hex(99), bin(128), oct(10))
+print(type(14e2))
+
+print(10/3)
+print(decimal.Decimal('10')/decimal.Decimal('3'))
+
+print(Fraction(10, 3))
+
