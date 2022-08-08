@@ -95,6 +95,8 @@ avg()，求平均
 group by是分组，结合聚合函数用，否则没有意义
 having，后计算用的，因为select语句有加载顺序
 
+多个表查询
+select * from <table1> <alias1> join <table2> <alias2> where alias1.Field1 = alias2.Field2 and alias1.Field > n
 
 
 '''
