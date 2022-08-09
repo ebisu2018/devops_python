@@ -57,5 +57,3 @@ print([1, *range(4), 5])
 path = '/user/local/admin/file.txt'
 dirname, _, basename = path.rpartition('/')
 print(dirname, _, basename)
-
-
