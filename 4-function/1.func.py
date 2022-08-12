@@ -4,7 +4,7 @@
 
 def是表示定义函数的关键字
 后面的是函数标识符，标识符指向函数对象
-参数列表，定义函数是形式参数
+参数列表，定义函数是形参
 内部是函数语句块
 return是返回值，如果没有默认返回None
 
@@ -14,10 +14,12 @@ return是返回值，如果没有默认返回None
 函数是callable，可以使用callable(标识符)检验是否是可调用对象
 函数参数不需要指定类型，因为python是动态类型的
 
+值传递，一般是不可变类型，会创建一个副本，修改形参不会改变实参
+引用传递，一般是可变类型，会把引用类型的地址传入，修改形参也会修改实参，需要注意
 
 传递 实参 的两种方式：
-position参数，实参和定义形参的顺序一致
-keyword参数，指定关键字，顺序任意指定，需要指定参数名，不用加引号
+1. position参数，实参和定义形参的顺序一致
+2. keyword参数，指定关键字，顺序任意指定，需要指定参数名，不用加引号
 可以混合使用，但是位置参数必须在关键字参数之前
 
 
@@ -60,7 +62,25 @@ return看似可以返回多个值，本质封装在一个元组中
 
 '''
 
-print('位置参数')
+print('参数传递'.center(30, '#'))
+
+
+def demo(value):
+    value += value
+    print(value, id(value))
+
+
+a = 'python'
+print(id(a))
+demo(a)
+
+l = [1, 2, 3]
+print(id(l))
+demo(l)
+
+print('位置参数'.center(30, '#'))
+
+
 def add(a, b):
     print(a, b)
     return a + b
@@ -70,7 +90,7 @@ print(add(2, 4))
 print(callable(add))
 
 
-print('关键字参数')
+print('关键字参数'.center(30, '#'))
 print(add(b=3, a=5))
 
 
@@ -82,17 +102,21 @@ def login(host='local', port=3306, username='root', password='root'):
 login()
 login('192.168.1.1', username='admin', password='admin')
 
-print('可选形参')
+print('可选形参'.center(30, '#'))
+
+
 def add(*args):
     print(type(args), args)
 
+
 add()
 # <class 'tuple'> (1, 2, 3, 4, 5)
-add(1, 2, 3, 4, 5)
+add(5, 4, 3, 2, 1)
 add(*range(5))
 
+print('可变关键字形参'.center(30, '#'))
 
-print('可变关键字形参')
+
 def add(**kwargs):
     print(type(kwargs), kwargs)
 
@@ -110,7 +134,7 @@ def config(host, port=3306, **kwargs):
 config('localhost', a=1, b=2, c=3)
 
 
-print('keyword-only')
+print('keyword-only'.center(30, '#'))
 
 
 def foo(*args, a, b):

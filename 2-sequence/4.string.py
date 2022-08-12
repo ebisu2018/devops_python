@@ -10,7 +10,7 @@ f前缀，字符串插值
 
 查找的方法：
 index(), count(), find(), len()
-要注意时间复杂度
+要注意时间复杂度，参考列表
 find()和index()找到了子字符串都会返回索引位置
 find()如果没有找到子字符串则返回-1，更安全
 index()如果没有找到子字符串则会抛出valueError
@@ -43,24 +43,18 @@ str.isidentifier(),判断是否是标识符
 '''
 
 print(r'\t\n\r')
-s1 = 'hello'
-s2 = 'python'
-print(f'{s1}, {s2}')
 
-s = 'abcabcabc'
+print('查找'.center(30, '#'))
+s = 'abcabdxya'
 print(s.index('b'))
 print(s.count('b'))
 print(len(s))
 print(s.find('a'))
 print(s.rfind('a'))
 print(s.rindex('b'))
-
 print(s.find('x'))
-# print(str.index('x'))
 
-print('a' + 'b')
-
-print('-'.join('xxxxxx'))
+print('-'.join('xxxxx'))
 
 a = map(str, range(5))
 print('*'.join(a))
@@ -68,7 +62,7 @@ print('*'.join(a))
 print('abcd'.split('b'))
 print('a/b/c/d'.split('/'))
 
-# 只切第一个
+# 只切两个
 x = '/'.join('abcd')
 print(x.split('/', 2))
 

@@ -137,3 +137,32 @@ alphabet = string.ascii_lowercase
 for i in range(10):
     prod_id = "{:0>6}.{}".format(i, ''.join(random.choices(alphabet, k=10)))
     print(prod_id)
+
+
+'''
+9. 冒泡排序算法
+5， 8， 4， 1
+长度是n，要比n-1轮
+每一轮要比较n-轮数-1
+
+第一轮
+5841
+5481
+5418
+
+第二轮
+4518
+4158
+
+第三轮
+1458
+
+'''
+
+data = [5, 8, 4, 1]
+for i in range(len(data) - 1):
+    for j in range(len(data) - i - 1):
+        if data[j] > data[j + 1]:
+            data[j], data[j + 1] = data[j + 1], data[j]
+
+print(data)
