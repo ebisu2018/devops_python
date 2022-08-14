@@ -24,7 +24,12 @@ global 关键字
 在函数体内定义全局变量，使用 global 关键字对变量进行修饰后，该变量就会变为全局变量
 
 nonlocal关键字
+nonlocal，指明变量不是本地的局部变量，也不是全局global变量，而是到嵌套函数外层函数的局部变量
+nonlocal不能引用全局global变量，因此必须出现在嵌套函数中！
 
+嵌套函数加载局部变量作用域的机制
+LEGB机制, local, enclosing, global, build-in
+优先用local变量，没有则找外层函数作用域，没有则找global作用域，没有则找build-in，还没有则是NameError异常
 
 globals()和locals()
 通过调用 globals() 函数，我们可以得到一个包含所有全局变量的字典
@@ -89,6 +94,19 @@ def test():
 test()
 print('函数体外访问：', web_url)
 
+
+def inc():
+    a = 0
+
+    def inner():
+        nonlocal a
+        a += 1
+        return a
+    return inner
+
+
+fn = inc()
+print(fn())
 
 print(globals())
 # 作用相当于globals()

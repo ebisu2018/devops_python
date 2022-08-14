@@ -40,7 +40,11 @@ print(gen()) # 返回的是generator
 
 # for里面会自动调用next方法
 for i in g:
-    print(i)
+    print(i, end=' ')
+
+print()
+print('yield多个'.center(30, '#'))
+
 
 def foo():
     yield 9
@@ -48,8 +52,11 @@ def foo():
     yield 7
     return 6
 
+
 for i in foo():
-    print(i)
+    print(i, end=' ')
+
+print()
 
 
 # 构造无限个元素的容器
@@ -84,6 +91,8 @@ f = fib()
 for i in range(10):
     print(i + 1, next(f))
 
+print('yield from'.center(30, '#'))
+
 
 def foo():
     yield from range(20, 26)
@@ -91,6 +100,8 @@ def foo():
 
 for i in foo():
     print(i)
+
+print('yield from with map'.center(30, '#'))
 
 
 def bar():

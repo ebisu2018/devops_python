@@ -48,6 +48,7 @@ def lru_cache(maxsize=128, typed=False):
 
 from functools import partial, reduce, lru_cache
 import inspect
+import time
 
 def fn(a, b):
     print(a, b)
@@ -83,9 +84,6 @@ print({**{'a': 1}, **{'b': 100}})
 
 
 print('cache'.center(30, '#'))
-
-
-import time
 
 
 @lru_cache
