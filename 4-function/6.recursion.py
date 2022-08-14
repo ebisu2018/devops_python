@@ -9,6 +9,8 @@
 '''
 
 # 普通版本
+
+
 def fib1(n):
     a = b = 1
     for i in range(n - 2):

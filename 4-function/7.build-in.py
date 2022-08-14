@@ -22,6 +22,10 @@ map(lambda, iterable)，把可迭代对象中元素处理成另一种形式，�
 
 zip()，和每个集合的对应元素组合成元组返回的迭代器
 
+
+eval() 和 exec() 函数的功能是相似的，都可以执行一个字符串形式的 Python 代码（代码以字符串的形式提供），
+二者不同之处在于，eval() 执行完要返回结果，而 exec() 执行完不返回结果
+
 '''
 
 
@@ -55,3 +59,4 @@ print(list(map(lambda *args: args, range(5), 'abcd')))
 z = zip('abcd', range(5), '1234')
 for i in z:
     print(i)
+

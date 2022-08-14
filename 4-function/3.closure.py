@@ -3,6 +3,8 @@
 闭包 closure
 条件：出现在嵌套函数中，内层函数引用外层函数的自由变量，外层函数返回的是内层函数的地址！
 内层函数引用外层函数定义的变量，那个变量也叫自由变量
+闭包比普通的函数多了一个 __closure__ 属性，该属性记录着自由变量的地址
+当闭包被调用时，系统就会根据该地址找到对应的自由变量，完成整体的函数调用
 
 
 闭包原理
@@ -53,13 +55,17 @@ print(fn())
 
 print('nonlocal'.center(30, '#'))
 
+
 def inc():
     a = 0
+
     def inner():
         nonlocal a
         a += 1
         return a
     return inner
 
+
 fn = inc()
+print(fn.__closure__)
 print(fn())
