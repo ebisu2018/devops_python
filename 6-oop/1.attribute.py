@@ -24,6 +24,14 @@ self，指当前实例本身
 
 类属性，是所有实例共享的，放在类的__dict__中
 实例属性，是每个属性自己的，放在实例的__dict__中，通过self访问
+在各个类方法之外定义的变量称为类属性或类变量，而在类方法中定义的属性称为实例属性
+
+可以用实例属性获取类变量，但是无法修改类变量
+因为实例会定义新的变量而不是修改类变量
+
+类.类变量
+实例.实例变量
+所有实例共享类变量，只可以获取
 
 属性访问规律：
 1.  通过实例.属性，优先访问实例自己的字典，没有则在类的字典中查找
@@ -36,6 +44,7 @@ self，指当前实例本身
 
 '''
 
+
 class Person:
     # 文档
     """Class Doc"""
@@ -47,8 +56,7 @@ class Person:
     def eat(self):
         print('eat', __class__.__name__)
 
-# print(__name__)
-# print(__file__)
+
 print(Person, Person.__doc__, Person.__name__)
 print(Person.x, Person.y, Person.eat)
 
@@ -56,6 +64,7 @@ print(Person.x, Person.y, Person.eat)
 class Person:
 
     color = 'red'
+
     # 初始化
     def __init__(self, name, age):
         self.name = name # 实例属性
@@ -68,24 +77,33 @@ class Person:
 
 # 实例化
 p = Person("Tom", 25)
-print(p, p.name, p.age)
+print(p, p.name, p.age, p.color)
 p.intro()
 
-# 类的类是元类
-print(Person.__class__, Person.__class__.__name__) # <class 'type'> type
+print('动态绑定方法'.center(30, '#'))
 
+
+def job(self, work):
+    print(f'working in {work}')
+
+
+p.foo = job
+p.foo(p, 'Fedelity')
+
+
+print('类的类是元类'.center(30, '#'))
+print(Person.__class__, Person.__class__.__name__) # <class 'type'> type
 # 等同于__class__
 print(type(Person), type(Person).__name__) # <class 'type'> type
 
-# 实例的类型是类
+print('实例的类型是类'.center(30, '#'))
 print(type(p), p) # <class '__main__.Person'> <__main__.Person object at 0x7faa50113c40>
-
 # 等同于type
 print(p.__class__, p.__class__.__name__) # <class '__main__.Person'> Person
 
-# 保存类属性和方法
+print('查看类字典'.center(30, '#'))
 print(Person.__dict__)
 
-# 实例字典，保存实例属性
+print('查看实例字典'.center(30, '#'))
 print(p.__dict__)
 

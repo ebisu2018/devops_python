@@ -8,11 +8,11 @@ partial()，在函数式编程中常用，对传入的参数固定，返回一�
 之后调用新函数的时候仅仅需要传入未固定的参数即可
 被固定的参数无法被修改，如果是默认值参数被固定可以修改
 
-partial()，本质是返回一个函数，类型装饰器一样
+partial()，本质是返回一个函数，类似装饰器一样
 然后再调用返回的函数，可以参考柯里化或者装饰器的logger部分
 partial(a)(b)
 
-buffer缓冲，是FIFO的队列，来不及处理的时候使用
+buffer缓冲，是FIFO的队列，来不及处理的时候放在队列里使用
 cache缓存，为了节省计算时间，直接在内存中读取使用
 
 lru_cache就是做缓存的装饰器
@@ -50,6 +50,9 @@ from functools import partial, reduce, lru_cache
 import inspect
 import time
 
+print('Reduce'.center(30, '#'))
+
+
 def fn(a, b):
     print(a, b)
     return a + b
@@ -60,9 +63,9 @@ print(red)
 
 red = reduce(lambda x, y: x * y, range(1, 6))
 print(red)
-
-
 print('Partial'.center(30, '#'))
+
+
 def add(a, b=5):
     return a + b
 
@@ -80,8 +83,17 @@ newfn = partial(add, b=10)
 print(inspect.signature(newfn))
 print(newfn(10))
 
-print({**{'a': 1}, **{'b': 100}})
 
+def display(name, age):
+    print("name:", name, "age:", age)
+
+
+hugo = partial(display, name='Hugo')
+print(inspect.signature(hugo))
+hugo(name='Mateo', age=35)
+
+# 字典的合并
+print({**{'a': 1}, **{'b': 100}})
 
 print('cache'.center(30, '#'))
 

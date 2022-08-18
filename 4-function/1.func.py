@@ -75,10 +75,12 @@ def demo(value):
 a = 'python'
 print(id(a))
 demo(a)
+print(a)
 
 l = [1, 2, 3]
 print(id(l))
 demo(l)
+print(l)
 
 print('位置参数'.center(30, '#'))
 

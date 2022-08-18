@@ -23,7 +23,7 @@ def wrapped():
 当调用wrapped()的时候，相当于decorator(wrapped)(参数)，即wrapper(参数)
 
 2. 带参装饰器
-wraps装饰器，用于wrapped的属性覆盖wrapper的属性，外面看起来像是就是调用wrapped
+wraps装饰器，用wrapped的属性覆盖wrapper的属性，外面看起来像是就是调用wrapped
 
 @wraps(wrapped)
 def wrapper(*args, **kwargs):
@@ -35,14 +35,17 @@ def wraps(wrapped, assigned = WRAPPER_ASSIGNMENTS, updated = WRAPPER_UPDATES):
 因为只接受一个函数作为参数，因此可以使用装饰器！
 本质调用的是partial(update_wrapper, wrapped=wrapped, assigned=assigned, updated=updated)，是一个偏函数对象！
 再调用偏函数对象加上参数wrapper，相当于调用了update_wrapper(wrapper, wrapped)
+wraps(wrapped) -> fn = partial(update_wrapper, wrapped=wrapped) -> fn(wrapper)
 
-
-总结：无论带不带参数，decorator的名字后面的参数一定是def中定义的函数对象
+总结：无论带不带参数，decorator后面的参数一定是def中定义的函数对象
 
 '''
+from functools import update_wrapper, wraps
 
 
-# 函数柯里化
+print('函数柯里化'.center(30, '#'))
+
+
 def counter(base):
     def inc(step=1):
         nonlocal base
@@ -75,16 +78,11 @@ def mul(a):
 
 
 print(mul(2)(3)(4))
-
-print('###############')
 print('装饰器'.center(30, '#'))
 
 
 def add(a, b):
     return a + b
-
-
-from functools import update_wrapper, wraps
 
 
 # 无参装饰器，参数写在内部函数中，外层函数只传递函数对象
@@ -108,4 +106,24 @@ def add(x, y):  # 把标识符作为logger的wrapped传入，覆盖此标识符
 
 # 相当于调用wrapper函数，相当于logger(add)(10, 20)
 print(add(10, 20))
+print(add.__closure__, add.__name__)
 
+
+print('Exercise'.center(30, '#'))
+
+
+def china(wrapped):
+    def wrapper(*args, **kwargs):
+        print('包在国土范围之内')
+        wrapped(*args, **kwargs)
+        print('包在国土范围之内')
+    return wrapper
+
+
+@china
+def taiwan(province: str):
+    print(f'中国 {province}省')
+
+
+taiwan('台湾')
+print(taiwan.__closure__, taiwan.__name__)

@@ -31,7 +31,7 @@ from collections import defaultdict
 
 d = defaultdict(list)
 d['d1'].extend(range(5))
-print(d)
+print(d, d['d2'])
 
 d2 = defaultdict(lambda: {100})
 print(d2['d2'])

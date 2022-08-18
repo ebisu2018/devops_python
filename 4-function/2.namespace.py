@@ -32,7 +32,7 @@ LEGB机制, local, enclosing, global, build-in
 优先用local变量，没有则找外层函数作用域，没有则找global作用域，没有则找build-in，还没有则是NameError异常
 
 globals()和locals()
-通过调用 globals() 函数，我们可以得到一个包含所有全局变量的字典
+通过调用 globals() 函数，我们可以得到一个包含所有全局变量的字典，key是变量名，value是变量值
 并且，通过该字典，可以访问指定变量，还可修改它的值
 locals() 返回的局部变量组成的字典，可以用来访问变量，但无法修改变量的值
 
@@ -97,7 +97,6 @@ print('函数体外访问：', web_url)
 
 def inc():
     a = 0
-
     def inner():
         nonlocal a
         a += 1
