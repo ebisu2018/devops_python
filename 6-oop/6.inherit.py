@@ -17,8 +17,13 @@ __subclass__，查看子类
 overload，重载，可以对不同类型的操作数操作
 override，重写，继承中如果不想用父类的方法则可以重写子类的方法
 
-一般继承父类，初始化的时候需要调用父类初始化的方法
+如果在子类中定义构造方法，则必须在该方法中调用父类的构造方法。
 如果类没有调用init，默认调用Object的init方法
+
+调用父类方法
+super().__init__(self,...)
+使用 super() 函数。但如果涉及多继承，该函数只能调用第一个直接父类的构造方法
+多继承时，在子类构造函数中，调用其它父类构造方法的方式只能使用未绑定方法。
 
 
 多态，python中
@@ -28,8 +33,6 @@ override，重写，继承中如果不想用父类的方法则可以重写子类
 
 
 多继承，有一定的复杂性，有缺点，尽量避免多继承
-MRO，当多继承复杂的情况，深度优先有原则
-
 
 抽象类，一般不用实例化
 只定义了接口，不具体实现，要子类实现
@@ -59,13 +62,15 @@ d = Dog()
 d.shout()
 print(Dog.__dict__)
 print(d.__dict__)
+print('Call Super'.center(30, '#'))
 
 
 class Cat(Animal):
     # 2. 调用父类的方法
     def shout(self):
+        # 手动绑定
         # Animal.shout(self)
-        super(Cat, self).shout()
+        super().shout()
         print('Miao')
 
 
@@ -96,7 +101,7 @@ class A:
 class B(A):
     def __init__(self, b, c):
         # 继承父类的初始化方法
-        super(B, self).__init__(10)
+        super().__init__(10)
         self.b = b
         self.c = c
 
@@ -142,4 +147,3 @@ w.printit()
 
 p = PrintablePDF('pdf string')
 p.printit()
-

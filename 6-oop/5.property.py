@@ -102,3 +102,36 @@ class Dog:
 d = Dog('huanhuan')
 d.name = 'qiuqiu'
 print(d.name)
+
+
+class CLanguage:
+    def set_name(self, name):
+        if len(name) < 3:
+            raise ValueError('must greater than 3')
+        self.__name = name
+
+    def get_name(self):
+        return self.__name
+
+    name = property(get_name, set_name)
+
+    def set_add(self, add: str):
+        if add.startswith('http://'):
+            self.__add = add
+        else:
+            raise ValueError('must start with http://')
+
+    def get_add(self):
+        return self.__add
+
+    add = property(get_add, set_add)
+
+    def __display(self):
+        print(self.__name, self.__add)
+
+
+clang = CLanguage()
+clang.name = "Python"
+clang.add = "http://c.biancheng.net/view/2287.html"
+print(clang.name, clang.add)
+clang._CLanguage__display()
