@@ -1,7 +1,7 @@
 '''
 
 描述符
-通过使用描述符，可以让程序员在引用一个对象属性时自定义要完成的工作
+通过使用描述符，可以在引用一个对象属性时自定义要完成的工作
 __set__(self, obj, type=None)：在设置属性时将调用这一方法
 __get__(self, obj, value)：在读取属性时将调用这一方法
 实现了 setter 和 getter 方法的描述符类被称为数据描述符
@@ -41,7 +41,7 @@ class RevealAccess:
         self.name = name
 
     def __get__(self, instance, owner):
-        print('Retrieving',instance, owner, self.name)
+        print('Retrieving', instance, owner, self.name)
         return self.val
 
     def __set__(self, instance, value):

@@ -8,7 +8,6 @@ timedelta，表示时间的增量，可以和datetime对象相加相减
 '''
 
 import datetime
-import time
 
 # 获取当前时间
 d = datetime.datetime.now()

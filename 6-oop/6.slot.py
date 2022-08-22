@@ -35,7 +35,7 @@ def info3():
 CLang.info = info
 CLang.info2 = info2
 CLang.info3 = info3
-
+print(CLang.__dict__)
 clang = CLang()
 clang.info()
 clang.info2()
@@ -64,4 +64,4 @@ PLanguage = type('Planguage', (object,), dict(learn=learn, name='python.org'))
 plang = PLanguage()
 print(plang.name)
 plang.learn()
-
+print(plang.__dict__)

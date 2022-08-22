@@ -8,6 +8,10 @@ hasattr来判断是否包含属性
 
 其中属性都是用字符串表示
 
+hasattr() 函数的用法，该函数的功能是查找类的实例对象中是否包含指定名称的属性或者方法
+但该函数有一个缺陷，即它无法判断该指定的名称，到底是类属性还是类方法
+可以结合使用__call__弥补
+
 '''
 
 
@@ -26,6 +30,23 @@ print(getattr(a, 'showme')())
 # 判断对象是否有属性
 print(hasattr(a, 'x'))
 print(hasattr(a, 'showme'))
+
+
+class CLanguage:
+    def __init__(self):
+        self.name = "C语言中文网"
+        self.add = "http://c.biancheng.net"
+
+    def say(self):
+        print("我正在学Python")
+
+
+clangs = CLanguage()
+if hasattr(clangs, "name"):
+    print(hasattr(clangs.name, "__call__"))
+print("**********")
+if hasattr(clangs, "say"):
+    print(hasattr(clangs.say, "__call__"))
 print('反射'.center(30, '#'))
 
 '''
@@ -40,7 +61,8 @@ return的值是属性查找的结果
 如果抛出AttributeError则会调用__getattr__
 
 __getattr__
-用于拦截AttributeError的，使其不抛出AttributeError异常
+当没有找到属性会调用该方法
+用于拦截AttributeError，使其不抛出AttributeError异常
 如果在子类以及父类的__dict__中找不到属性，会调用该方法，可以返回一个值，而不会抛出AttributeError
 
 __setattr__

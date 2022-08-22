@@ -71,6 +71,8 @@ print('Callable'.center(30, '#'))
 如果要实现实例的可调用，则要实现call方法
 callable()判断类或者实例是否可以调用
 
+“instance()”可以理解为是“instance.__call__()”的简写
+
 '''
 
 
@@ -94,6 +96,7 @@ class A:
 a = A(5, 10)
 print(a)
 print(a())
+print(a.__call__())
 print('上下文管理'.center(30, '#'))
 
 '''
