@@ -3,6 +3,12 @@
 生成器表达式只能写简单的表达式，由一条表达式构成 (i for i in range(n))
 如果需要构建复杂的函数，则用生成器函数
 
+生成器的创建方式：
+定义一个以 yield 关键字标识返回值的函数
+调用刚刚创建的函数，即可创建一个生成器
+
+即便调用生成器函数，Python 解释器也不会执行函数中的代码，它只会返回一个生成器（对象）
+
 生成器函数
 函数生成的依然是生成器对象! 不会直接返回结果，调用next后会返回一个值
 如果用next方法，碰到return后会抛出异常
@@ -114,3 +120,29 @@ b = bar()
 for i in range(5):
     print(next(f))
     print(next(b))
+
+
+def intNum():
+    print('开始执行')
+    for i in range(5):
+        yield i
+        print('继续执行')
+
+
+num = intNum()
+print(num)
+print(next(num))
+print(num.__next__())
+for i in num:
+    print(i)
+
+
+def foo():
+    bar_a = yield "hello"
+    bar_b = yield bar_a
+    yield bar_b
+
+
+f = foo()
+print(f.send(None))
+print(f.send('Test'))

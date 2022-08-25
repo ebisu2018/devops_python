@@ -152,3 +152,29 @@ def add(a, b):
 
 with Timeit() as t:
     add(4, 6)
+
+
+class ListDemo:
+    def __init__(self):
+        self.__date = []
+        self.__step = 0
+
+    def __next__(self):
+        if self.__step <= 0:
+            raise StopIteration
+        self.__step -= 1
+        return self.__date[self.__step]
+
+    def __iter__(self):
+        return self
+
+    def __setitem__(self, key, value):
+        self.__date.insert(key, value)
+        self.__step += 1
+
+
+myList = ListDemo()
+myList[0] = 1
+myList[1] = 2
+for i in myList:
+    print(i)
