@@ -1,2 +1,2 @@
 print(__name__)
-x = 455
+x = 'm1.__init__'

@@ -5,6 +5,7 @@
 
 import time
 import datetime
+from contextlib import contextmanager
 
 print('container'.center(30, '#'))
 
@@ -102,11 +103,29 @@ print('上下文管理'.center(30, '#'))
 '''
 
 实例的上下文管理
-当使用with对实例进行上下文管理时
-需要实现enter和exit方法
+同时包含 __enter__() 和 __exit__() 方法的对象就是上下文管理器
+当 with as 操作上下文管理器时，就会在执行语句体之前
+先执行上下文管理器的 __enter__() 方法，然后再执行语句体，最后执行 __exit__() 方法。
 
-__enter__()，进入上下文，with会把此方法返回值赋值给as的变量
-__exit__()，退出对象的上下文时执行
+
+__enter__(self)
+进入上下文管理器自动调用的方法，该方法会在 with as 代码块执行之前执行，最先执行的是init方法
+如果 with 语句有 as子句，那么该方法的返回值会被赋值给 as 子句后的变量
+该方法可以返回多个值，因此在 as 子句后面也可以指定多个变量
+
+__exit__（self, exc_type, exc_value, exc_traceback）
+退出上下文管理器自动调用的方法
+该方法会在 with as 代码块执行之后执行
+如果 with as 代码块成功执行结束，程序自动调用该方法，调用该方法的三个参数都为 None
+如果 with as 代码块因为异常而中止，程序也自动调用该方法，使用 sys.exc_info 得到的异常信息将作为该方法的参数
+
+常见的有 2 种方式：基于类实现和基于生成器实现
+使用基于生成器的上下文管理器时，不再用定义 __enter__() 和 __exit__() 方法，但需要加上装饰器 @contextmanager
+无论使用哪一种，不用忘记在__exit__()或者是 finally 块中释放资源
+
+
+当出现异常时，如果 __exit__ 返回 False（默认不写返回值时，即为 False），则会重新抛出异常，让 with as 之外的语句逻辑来处理异常
+如果返回 True，则忽略异常，不再对异常进行处理
 
 上下文应用场景
 对函数实现增强，类似装饰器
@@ -116,42 +135,87 @@ __exit__()，退出对象的上下文时执行
 '''
 
 
-class A:
-
-    def __init__(self):
-        print('step init')
-
-    def __enter__(self):
-        print('step enter')
-        return self
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        print('step exit')
-
-
+# class A:
+#
+#     def __init__(self):
+#         print('step init')
+#
+#     def __enter__(self):
+#         print('step enter')
+#         return self
+#
+#     def __exit__(self, exc_type, exc_val, exc_tb):
+#         print('step exit')
+#
+#
 # with A() as a:
 #     print('with start')
 #     print('with end')
 
+print('基于类的上下文管理器'.center(30, '#'))
 
-class Timeit:
+
+class FkResource:
+    def __init__(self, tag):
+        self.tag = tag
+        print(f'初始化 {self.tag}')
+
     def __enter__(self):
-        self.start = datetime.datetime.now()
-        print('开始计时')
-        return self
+        print(f'__enter__: {self.tag}')
+        return self.tag # 返回给as后面的变量
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        delta = (datetime.datetime.now() - self.start).total_seconds()
-        print(f'took {delta}s')
+        print(f'__exit__: {self.tag}')
+        if exc_tb is None:
+            print('没有异常时关闭资源')
+        else:
+            print('遇到异常时关闭资源')
+            return True
 
 
-def add(a, b):
-    time.sleep(1)
-    return a + b
+with FkResource('孙悟空') as dr:
+    print('dr:', dr)
+    print('[with代码块] 没有异常')
 
 
-with Timeit() as t:
-    add(4, 6)
+with FkResource('白骨精'):
+    print('[with代码块] 异常之前的代码')
+    raise Exception
+    print('[with代码块] ~~~~~~~~异常之后的代码')
+print('基于生成器的上下文管理器'.center(30, '#'))
+
+
+@contextmanager
+def file_manager(name, mode):
+    try:
+        f = open(name, mode)
+        yield f
+    finally:
+        f.close()
+
+
+with file_manager('test', 'w') as f:
+    f.write('hello world')
+
+
+# class Timeit:
+#     def __enter__(self):
+#         self.start = datetime.datetime.now()
+#         print('开始计时')
+#         return self
+#
+#     def __exit__(self, exc_type, exc_val, exc_tb):
+#         delta = (datetime.datetime.now() - self.start).total_seconds()
+#         print(f'took {delta}s')
+#
+#
+# def add(a, b):
+#     time.sleep(1)
+#     return a + b
+#
+#
+# with Timeit() as t:
+#     add(4, 6)
 
 
 class ListDemo:

@@ -45,6 +45,9 @@ finally: 总会执行
 
 '''
 
+import sys
+import traceback
+
 # raise
 try:
     raise IndexError('index error')
@@ -88,3 +91,10 @@ except Exception as e:
     print(e)
 else:
     print('else')
+
+
+try:
+    x = int(input("请输入一个被除数："))
+    print("30除以", x, "等于", 30/x)
+except:
+    traceback.print_tb(sys.exc_info()[2])

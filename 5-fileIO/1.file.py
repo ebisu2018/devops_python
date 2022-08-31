@@ -28,6 +28,10 @@ b模式，二进制模式，rb，wb结合使用，读和写都是encode类型
 用wb的时候必须要编码写入字节序列
 文件查看是字符串因为方便人阅读，如果用rb方式读则是byte类型
 
+操作系统不会立刻把数据写入磁盘，而是先缓存起来
+只有调用close()时，操作系统才会保证把没有写入的数据全部写入磁盘文件中
+如果向文件写入数据后，不想马上关闭文件，也可以调用文件对象提供的 flush() 函数，它可以实现将缓冲区的数据写入文件中
+
 文本文件在磁盘上就是二进制形式保存的字节序列，和编码无关
 但是如果显示需要指定编码，每个编码不同对应的字符也不同
 
@@ -54,62 +58,49 @@ with 关键字，自动close文件对象，防止文件抛出异常而没有关�
 
 '''
 
-f = open('test')
-print(f)
+print('r模式'.center(30, '#'))
+f = open('test', mode='r')
+print(f, f.name, f.closed)
 print(f.read())
-print(f.readable())
+f.seek(0)
+print(f.readline().strip())
+f.seek(0)
+print(f.readlines())
 f.close()
-print(f.closed)
 
+print('w模式'.center(30, '#'))
 f = open('test', mode='w')
-f.write('abc\n')
-print(f.writable())
+print(f.encoding)
+f.write('如果打开文件模式中包含 w（写入），会先清空原文件中的内容，然后再写入新的内容\n')
 f.close()
 
+print('a模式'.center(30, '#'))
 f = open('test', mode='a')
-f.write('qweqwe\n')
-f.write('trerf\n')
+print(f.encoding)
+f.write('如果打开文件模式中包含 a（追加），则不会清空原有内容，而是将新写入的内容会添加到原内容后边\n')
 f.close()
 
-f = open('test', 'wb')
-f.write('啊'.encode())
-f.close()
-
+print('rb模式'.center(30, '#'))
 f = open('test', 'rb')
 print(f.read())
 f.close()
 
-
-# 指针在开头从头写
-f = open('test', 'r+')
-f.write('rrrrr+++++\n')
-f.close()
+# print('r+模式'.center(30, '#'))
+# f = open('test', 'r+')
+# f.write('rrrrr+++++')
+# f.close()
 
 # 会清空之前的内容
+print('w+模式'.center(30, '#'))
 f = open('test', 'w+')
 print(f.read())
-f.write('wwwwww++++++\n')
+f.write('w+会覆盖之前的内容\n')
 f.close()
 
-# 指针会在EOF打开
+# # 指针会在EOF打开
 f = open('test', 'a+')
-f.seek(0)
-print(f.read())
 f.write('aaaaa+++++\n')
-f.close()
-
-f = open('test', 'a+')
-f.seek(0)
-print(f.tell())
-f.write('tttttttttt')
-print(f.read())
 f.close()
 
 with open('test') as fo:
     print(fo.read())
-
-
-with open('test') as fo:
-    for i in fo:
-        print(i.encode().strip())
-

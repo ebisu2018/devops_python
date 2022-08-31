@@ -5,8 +5,11 @@ globals()是当前模块全局的变量，是kv的字典
 locals()是当前作用域的局部变量，是kv的字典
 
 import的作用：提供一个全局标识符，指向模块对象，通过标识符找对应模块
+使用import导入模块的本质是，将模块的全部代码加载到内存并执行，然后将整个模块内容赋值给与模块同名的变量
+该变量的类型是 module，而在该模块中定义的所有程序单元都相当于该 module 对象的成员
+
 import导入的必须module类型（py文件或目录），不可以是函数，类或者其他
-from <module> import <class, module, func, var, *>
+而通过from <module> import 导入可以是class, module, func, var, *
 
 import一个顶级模块，会将顶级模块加入名称空间使用
 import一个非顶级模块，如os.path，只会将顶级模块加入名称空间，使用必须使用限定的名称
@@ -25,7 +28,7 @@ from m import x
 但是module中会加载from中的模块
 
 import m
-最小化使用m中的变量，不可以使用m下的子模块
+最小化使用m中的变量，不可以使用m下的子模块，可以使用init中的
 
 import m.m1
 可以使用m以及m.m1，父模块和子模块都会被加载
@@ -36,7 +39,6 @@ import m.m1
 import代表加载，在sys.module中，使用的变量在dir()中，2者不是一个概念
 如果要使用模块的资源，必须确保sys.module中有该模块！
 
-
 相对路径的导入不要用在包之外，一般在包内使用
 加载模块是加载模块，还要清楚模块有哪些标识符可以使用(dir())
 
@@ -45,13 +47,13 @@ import代表加载，在sys.module中，使用的变量在dir()中，2者不是�
 import t2
 import sys
 import os
-from m1 import m2
+# from m1 import m2
+import m1.m11
 
 print(dir())
 
 # 加载模块的顺序，先从工作目录中查找，没有再去标准库中
-# print(*sys.path, sep='\n')
-# print(*sys.modules.items(), sep='\n')
+print(*sys.path, sep='\n')
 
 # print(*filter(lambda x: x.startswith('m'), sys.modules.keys()))
 

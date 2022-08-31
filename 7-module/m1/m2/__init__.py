@@ -1,3 +1,3 @@
 print(__name__)
 
-a = 123
+a = 'm2.__init__'
