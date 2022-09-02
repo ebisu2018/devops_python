@@ -10,8 +10,8 @@
 
 dump(obj, file)，把数据结构序列化到文件
 dumps(obj)，把数据结构序列化成二进制
-load(file)，从文件中反序列化到数据结构
-loads(obj)，从序列化对象中反序列化到数据结构
+load(file)，从文件中反序列化到python对象
+loads(obj)，从序列化对象中反序列化到python对象
 
 pickle库只是python中用的，不能实现跨语言
 一般使用公共的格式如json，可以跨语言处理
@@ -100,13 +100,3 @@ def extract_json_blobs(input_content):
 
 
 extract_json_blobs(content)
-
-payload = ''
-filename = 'foldername/MyFilename.json'
-# filename = 'MyFilename'
-error_folder = 'error'
-new_filename = filename.replace('json', 'txt') if filename.endswith('.json') else f'{filename}.txt'
-part_list = new_filename.split('/')
-part_list.insert(-1, error_folder)
-error_path = '/'.join(part_list)
-print(error_path)
