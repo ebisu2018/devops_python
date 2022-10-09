@@ -1,34 +1,36 @@
 '''
 
-csv
+CSV 称为逗号分隔值文件
 逗号分隔值
 每一行都是记录
 每一项都转换成字符串
 两个双引号表示一个双引号
 
-
 '''
 
 import csv
 
-rows = [
-    ('id', 'name', 'age', 'desc'),
-    [1, 'Josh', 50, """Josh"s name"""],
-    [2, 'Leo', 45, "Leo's name"],
-    [3, 'Jack', 30, "Jack's name"]
-]
-
-# with open('info.csv', 'w') as fo:
-#     for line in rows:
-#         fo.write(",".join(map(str, line)) + '\n')
-
-with open('info.csv', 'w') as f:
-    writer = csv.writer(f)
-    # writer.writerow(rows[0])
-    writer.writerows(rows[:])
+with open('info.csv', 'w', newline='') as csvfile:
+    writer = csv.writer(csvfile, delimiter='.')
+    writer.writerow(['www.biancheng.net'] * 5 + ['how are you'])
+    writer.writerows([('hello world'), ('web site'), ('www.biancheng.net')])
 
 
-with open('info.csv', 'r') as f:
-    reader = csv.reader(f) # 返还迭代器
-    for line in reader:
-        print(line)
+with open('name.csv', 'w', newline='') as csvobj:
+    fieldnames = ['first_name', 'last_name']
+    writer = csv.DictWriter(csvobj, fieldnames=fieldnames)
+    writer.writeheader()
+    writer.writerows([{'first_name': 'Baked', 'last_name': 'Beans'}, {'first_name': 'Lovely', 'last_name': 'Spam'}])
+    writer.writerow({'first_name': 'Wonderful', 'last_name': 'Spam'})
+
+
+with open('info.csv', 'r') as fobj:
+    reader = csv.reader(fobj, delimiter='.')
+    for row in reader:
+        print(';'.join(row))
+
+
+with open('name.csv') as fobj:
+    reader = csv.DictReader(fobj)
+    for row in reader:
+        print(row)

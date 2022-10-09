@@ -69,10 +69,12 @@ re.IGNORECASE
 忽略空白字符
 re.VERBOSE
 
-re.match()，必须从字符串索引0开始匹配或者指定区间匹配，如果没有找到则返回None
-re.search()，在字符串内搜索，不一定是从头开始的，也可以指定区间
-一定要注意单行模式还是多行模式， search出来的是match对象，group[0]是match出来的内容
+re.match()，必须从字符串索引0开始匹配或者指定区间匹配才可以，没有返回None，用对象.group()可以获取内容
 fullmatch()，必须全部匹配，如果指定子串则要全部匹配
+
+re.search()，在字符串内搜索，不一定是从头开始的，也可以指定区间
+一定要注意单行模式多行模式， search出来的是match对象
+
 
 全文
 findall()，在文本中全文搜索，返回的是一个列表，里面是匹配到的内容是字符串
@@ -93,62 +95,74 @@ re.split('[pattern]')，切割用的
 import re
 
 s = '''bottle\nbag\nbig\napple'''
-print('match')
-m = re.match('b', s)
-print(m)
+
+print('match'.center(30, '#'))
+m = re.match(r'^b\w+', s)
+print(m, m.group())
 
 # match是从头匹配，没有找到则返回None
-regex = re.compile('^a', re.M)
+regex = re.compile(r'^a\w+', re.M)
 m = regex.match(s)
 print(m)
 
+
 # 指定区间而不是从头match就可以找到
-regex = re.compile('big', re.M)
+regex = re.compile(r'^b\w', re.M)
 m = regex.match(s, 11)
-print(m)
+print(m, m.group())
 
-print('search')
-# 在字符串中搜索
-m = re.search('^a', s, re.M)
-print(m)
 
+print('full match'.center(30, '#'))
 # 全部match
-m = re.fullmatch('^b', s, re.M)
+m = re.fullmatch(r'^b\w+', s, re.M)
 print(m)
 
 # 必须全部匹配才可以
-m = re.compile('bottle', re.M)
-regex = m.fullmatch(s, 0, 6)
-print(regex)
+m = re.compile(r'^b\w+', re.M)
+print(m)
+reg = m.fullmatch(s, 0, 6)
+print(reg, reg.group())
 
-m = re.findall('^b\w+', s, re.M)
+
+print('search'.center(30, '#'))
+# 在字符串中搜索，符合则返回，不会继续搜索
+m = re.search(r'^a\w+', s, re.M)
+print(m, m.group())
+
+m = re.search(r'a\w+', s, re.M)
+print(m, m.group())
+
+print('find all'.center(30, '#'))
+m = re.findall(r'^b\w+', s, re.S)
+print(m)
+
+m = re.findall(r'^b\w+', s, re.DOTALL)
+print(m)
+
+m = re.findall(r'^b\w+', s, re.M)
 print(m)
 
 
-x = re.sub('b\w', 'XXX', s)
+print('sub替换'.center(30, '#'))
+x = re.sub(r'b\w', 'XXX', s)
 print(type(x), x)
 
-# 不常用
-x = re.subn('b\w', 'XXX', s)
-print(type(x), x)
 
 print('Group'.center(30, '#'))
-m = re.search('(b\w+)', s)
+m = re.search(r'(^b\w+)', s)
 print(m, m.groups(), m[0], m.group(0))
 
 
-m = re.search('(b)(\w+)', s)
+m = re.search(r'(b)(\w+)', s)
 print(m, m.groups(), m.group(0), m.group(1), m.group(2))
 
-reg = re.compile('(b\w+)\n(b\w+)\n(b\w+)')
+reg = re.compile(r'(^b\w+)\n(^b\w+)\n(^b\w+)', re.M)
 m = reg.findall(s)
 print(m)
 m = reg.search(s)
 print(m.groups())
-print(m)
-print(m.group(0))
 
-print('split')
+print('split'.center(30, '#'))
 s = '''os.path.abspath(path)\t\t\ngood'''
-r = re.split('[.(),\s]+', s)
+r = re.split(r'[.(),\s]+', s)
 print(r)
