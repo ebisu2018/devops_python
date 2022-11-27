@@ -74,6 +74,7 @@ fullmatch()，必须全部匹配，如果指定子串则要全部匹配
 
 re.search()，在字符串内搜索，不一定是从头开始的，也可以指定区间
 一定要注意单行模式多行模式， search出来的是match对象
+search出一个就停止搜索了，如果想都搜出来需要用小括号来分组
 
 
 全文
@@ -94,7 +95,7 @@ re.split('[pattern]')，切割用的
 
 import re
 
-s = '''bottle\nbag\nbig\napple'''
+s = '''bottle\nbag\nbig\napple\nabap'''
 
 print('match'.center(30, '#'))
 m = re.match(r'^b\w+', s)
@@ -119,15 +120,14 @@ print(m)
 
 # 必须全部匹配才可以
 m = re.compile(r'^b\w+', re.M)
-print(m)
 reg = m.fullmatch(s, 0, 6)
 print(reg, reg.group())
 
 
 print('search'.center(30, '#'))
 # 在字符串中搜索，符合则返回，不会继续搜索
-m = re.search(r'^a\w+', s, re.M)
-print(m, m.group())
+m = re.search(r'(^a\w+)\n(^a\w+)', s, re.M)
+print(m)
 
 m = re.search(r'a\w+', s, re.M)
 print(m, m.group())
@@ -149,18 +149,18 @@ print(type(x), x)
 
 
 print('Group'.center(30, '#'))
-m = re.search(r'(^b\w+)', s)
-print(m, m.groups(), m[0], m.group(0))
+m = re.search(r'(^b\w+)', s, re.M)
+print('1', m, m.groups(), m[0], m.group(0))
 
 
 m = re.search(r'(b)(\w+)', s)
-print(m, m.groups(), m.group(0), m.group(1), m.group(2))
+print('2', m, m.groups(), m.group(0), m.group(1), m.group(2))
 
 reg = re.compile(r'(^b\w+)\n(^b\w+)\n(^b\w+)', re.M)
 m = reg.findall(s)
-print(m)
+print(3, m)
 m = reg.search(s)
-print(m.groups())
+print(4, m.groups())
 
 print('split'.center(30, '#'))
 s = '''os.path.abspath(path)\t\t\ngood'''

@@ -10,13 +10,13 @@ CSV 称为逗号分隔值文件
 
 import csv
 
-with open('info.csv', 'w', newline='') as csvfile:
-    writer = csv.writer(csvfile, delimiter='.')
+with open('./files/info.csv', 'w', newline='') as csvfile:
+    writer = csv.writer(csvfile, delimiter=' ', quotechar='|')
     writer.writerow(['www.biancheng.net'] * 5 + ['how are you'])
-    writer.writerows([('hello world'), ('web site'), ('www.biancheng.net')])
+    writer.writerows([('hello world'), ('11-web site'), ('www.biancheng.net')])
 
 
-with open('name.csv', 'w', newline='') as csvobj:
+with open('./files/name.csv', 'w', newline='') as csvobj:
     fieldnames = ['first_name', 'last_name']
     writer = csv.DictWriter(csvobj, fieldnames=fieldnames)
     writer.writeheader()
@@ -24,13 +24,13 @@ with open('name.csv', 'w', newline='') as csvobj:
     writer.writerow({'first_name': 'Wonderful', 'last_name': 'Spam'})
 
 
-with open('info.csv', 'r') as fobj:
-    reader = csv.reader(fobj, delimiter='.')
+with open('./files/info.csv', 'r') as fobj:
+    reader = csv.reader(fobj, delimiter=' ', quotechar='|')
     for row in reader:
-        print(';'.join(row))
+        print('.'.join(row))
 
 
-with open('name.csv') as fobj:
+with open('./files/name.csv') as fobj:
     reader = csv.DictReader(fobj)
     for row in reader:
         print(row)
