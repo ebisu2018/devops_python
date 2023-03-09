@@ -21,57 +21,62 @@ blueprint是模块化用的
 
 
 from flask import Flask, request, Request, Response, jsonify, json, render_template
-import books
+from .books import book
 
 app = Flask('webapp')
-app.register_blueprint(books.book)
+app.register_blueprint(book, url_prefix='/book')
 
 
 # 默认是Get请求，还有HEAD OPTIONS
 # flask中只要处理返回的内容，可以编写返回码，如果需要添加header也可以
 @app.route('/')
-@app.route('/index', methods=['post'])
+@app.route('/index', methods=['get', 'post'])
 def index():
-    # return 'abc'
-    res = Response('abc', status=201)
-    res.headers.add_header('X-Study', 'Java')
-    return res
+    # ret = Response('abc', status=201)
+    page = render_template('index.html')
+    ret = Response(page)
+    ret.headers.add_header('X-Study', 'Java')
+    return ret
 
 
 @app.route('/json', methods=['Get', 'Post'])
 def get_json():
-    res = {
-        'count': 3,
+    print(request.path)
+    print(request.content_type)
+    print(request.form)
+    # print(request.query_string)
+    print(request.args)
+    ret = {
+        'count': 2,
         'result': [
             (1, 'Pablo', 20),
-            (2, 'Fernando', 30),
-            (3, 'Bob', 35)
+            (2, 'Fernando', 30)
         ]
     }
-    # return Response(json.dumps(res), content_type='application/json')
-    res = jsonify(res)
-    res.status = 201
+    # return Response(json.dumps(ret), content_type='application/json')
+    res = jsonify(ret)
+    res.status = 200
     return res
 
 
-@app.route('/temp')
-def get_info():
-
-    player = {
-       'name': 'Messi',
-       'nation': 'Argentina',
-       'age': 35,
-        'club': 'Barcelona'
-    }
-    ret = render_template('index.html', player=player)
-    return ret
+# @app.route('/temp')
+# def get_info():
+#
+#     player = {
+#        'name': 'Messi',
+#        'nation': 'Argentina',
+#        'age': 35,
+#         'club': 'Barcelona'
+#     }
+#     ret = render_template('login.html', player=player)
+#     return ret
 
 
 print('=' * 30)
 print(app.url_map)
 print(app.root_path)
 print(app.static_folder)
-print(app.static_url_path)
+# print(app.static_url_path)
 print(app.template_folder)
 print(app.jinja_loader.searchpath)
 print('=' * 30)

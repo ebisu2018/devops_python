@@ -1,10 +1,10 @@
 import os
 
-path = r'F:\迅雷下载\1899.s01'
+path = r'E:\迅雷下载\狂飙'
 os.chdir(path)
 videos = os.listdir(path)
 print(videos, os.getcwd())
 for name in videos:
-    new_name = name.replace('.HD中字[66影视www.66Ys.Co]', '')
+    new_name = name.replace('k', '狂')
     # print(new_name)
     os.rename(name, new_name)

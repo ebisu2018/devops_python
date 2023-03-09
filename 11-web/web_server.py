@@ -17,7 +17,7 @@ def application(environ, start_response):
                        [('Content-type', 'text/html; charset=utf-8'),
                         ('X-SERVER', 'Demo')])
 
-        with open('webapp/templates/index.html', encoding='utf-8') as f:
+        with open('webapp/templates/login.html', encoding='utf-8') as f:
             content = f.read()
         html = content.format(domain='NiuNiu')
     else:
@@ -42,7 +42,7 @@ class Application:
                        [('Content-type', 'text/html; charset=utf-8'),
                         ('X-SERVER', 'Demo')])
 
-        with open('webapp/templates/index.html', encoding='utf-8') as f:
+        with open('webapp/templates/login.html', encoding='utf-8') as f:
             html = f.read()
         html = html.format(domain='NiuNiu')
         return iter((html,))

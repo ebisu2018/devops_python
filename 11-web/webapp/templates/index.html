@@ -2,14 +2,73 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>JQuery Test</title>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sign-in/">
+    <script src="{{ url_for('static', filename='js/jquery-3.6.3.min.js') }}"></script>
 </head>
 <body>
-
-<h2>{{player.name}}</h2>
-<h2>{{player.nation}}</h2>
-<h2>{{player.club}}</h2>
-<h2>{{player.club}}</h2>
-
+<div id="root">
+<!--    前端框架一般都只有class或者id，事件在jquery中写-->
+    <button class="btnGet">Get请求</button>
+    <button class="btnPost">Post请求</button>
+    <button class="btnJson">Json请求</button>
+    <div class="console"></div>
+</div>
 </body>
 </html>
+
+<script>
+    // $(document).ready(function(){
+    // jQuery functions go here
+    // });
+    $(function (){
+        // let root = $('#root');
+        // console.log(root);
+        // root.css("color", "red");
+        // console.log(root.text());
+        // console.log(root.html());
+
+        // 写入，会替换之前的
+        // root.html('<span>其实显示的是我</span>');
+
+
+        // let img = $('<img>');
+        // img.attr({'class': 'logo', width: '60px', src: 'https://img1.baidu.com/it/u=2547466349,1102966824&fm=253&fmt=auto&app=138&f=JPEG?w=200&h=200'})
+        // root.append(img);
+        //
+        // let count = 0
+        // $('button.btn').click(function (event) {
+        //     let d = $('<div>' + (++count) + '</div>')
+        //     d.css({margin: '10px', border: '1px solid #000'})
+        //     $('div.console').append(d)
+        // })
+        $('.btnGet').click(function () {
+            $.get("http://localhost:5000/book/", {a: 100, b: 2000, c: 3000}, function (data) {
+                $('.console').text(data)
+            })
+        })
+
+        // post发送数据
+        $('.btnPost').click(function () {
+            $.post('json', {name: 'James', age: 30}, function (data) {
+                console.log(data)
+                $('.console').text(data)
+            })
+        })
+
+
+        // 预检请求，post发送json
+        $('.btnJson').click(function () {
+            $.ajax({
+                type: 'POST',
+                contentType: 'application/json',
+                url: 'http://localhost:5000/book/',
+                data: JSON.stringify({name: "Pablo", age: 20}),
+                success: function (msg) {
+                    console.log(msg)
+                }
+            })
+        })
+
+    });
+</script>
