@@ -59,6 +59,17 @@ def get_json():
     return res
 
 
+@app.route('/index.js')
+def get_jsonp():
+    print(request.args)
+
+    # 获取回调函数名
+    cb = request.args.get('callback')
+    resp = Response(f'{cb}({{a: 100, b: 200, c: 300}})')
+    resp.content_type = 'application/javascript'
+    return resp
+
+
 # @app.route('/temp')
 # def get_info():
 #

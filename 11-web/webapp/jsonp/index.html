@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jsonp test</title>
+    <script src="./js/jquery-3.6.3.min.js"></script>
+    <script>
+        // function test(data) {
+        //     console.log(data, '++++++');
+        // }
+    </script>
+
+</head>
+<body>
+<div id="web">
+    <button class="btnjsonp">Test JsonP</button>
+</div>
+</body>
+</html>
+
+<!-- img 和 script默认是可以跨域的 -->
+<!-- <script src="index.js"></script> -->
+
+<!-- <script src="http://localhost:5000/index.js?callbackfunction=test"></script> -->
+
+<script>
+    $(function() {
+        $('.btnjsonp').click(function () {
+            $.ajax({
+                type: 'GET',
+                dataType: "jsonp",
+                url: 'http://localhost:5000/index.js',
+                jsonp: 'callback',
+                // jsonpCallback: 'callerfunc',
+                success: function (data) {
+                    console.log('回调函数', data)
+                }
+            })
+        })
+    })
+
+</script>
