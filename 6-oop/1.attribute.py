@@ -90,7 +90,7 @@ def job(self, work):
 
 
 p.foo = job
-p.foo(p, 'Fedelity')
+p.foo(p, 'Fidelity')
 
 
 print('类的类是元类'.center(30, '#'))

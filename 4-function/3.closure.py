@@ -63,3 +63,4 @@ def inc():
 fn = inc()
 print(fn.__closure__)
 print(fn())
+print(fn())

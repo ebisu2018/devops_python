@@ -62,7 +62,9 @@ print(f())
 
 def add(a):
     def inc(b):
-        return a + b
+        nonlocal a
+        a += b
+        return a
     return inc
 
 

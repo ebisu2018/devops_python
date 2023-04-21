@@ -51,7 +51,7 @@ for i in range(0):
 # for i in range(1, 5, 2):
 #     print(i)
 
-# 1开始到1000，前18个，7的倍数
+# 1开始到1000，前10个，7的倍数
 count = 1
 for i in range(7, 1000, 7):
     if count == 11:

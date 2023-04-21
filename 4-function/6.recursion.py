@@ -15,10 +15,11 @@ def fib1(n):
     a = b = 1
     for i in range(n - 2):
         a, b = b, a + b
+        print(a, b)
     return b
 
 
-print(fib1(101))
+fib1(6)
 
 
 # 递归版本
@@ -29,5 +30,4 @@ def fib2(n, a=1, b=1):
     return fib2(n - 1, a, b)
 
 
-print(fib2(3))
 print(fib2(5))

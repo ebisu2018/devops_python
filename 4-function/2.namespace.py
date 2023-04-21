@@ -85,7 +85,7 @@ print('函数内定义全局'.center(30, '#'))
 
 def test():
     global web_url
-    web_url = "http://c.biancheng.net/python/"
+    web_url = "https://www.python.org"
     print("函数体内访问：", web_url)
     # 此处定义的是全局变量，因此在locals中看不到此全局变量
     print(locals())
@@ -97,6 +97,7 @@ print('函数体外访问：', web_url)
 
 def inc():
     a = 0
+
     def inner():
         nonlocal a
         a += 1

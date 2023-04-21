@@ -28,7 +28,7 @@ print(math.ceil(-1.1), math.ceil(-1.5), math.ceil(-1.8))
 print(int(1.1), int(-1.1))
 
 # 四舍五入
-print(round(1.2), round(2.6))
+print(round(1.2), round(2.6), round(3.5))
 
 # 幂运算，math模块的更精确
 print(pow(2, 3), 2 ** 3, math.pow(2, 3))
