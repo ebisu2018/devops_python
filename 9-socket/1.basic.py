@@ -68,16 +68,16 @@ print(type(data), data)
 newsock.send(f'!!!!{data.decode()}!!!'.encode())
 
 
-print('makefile'.center(30, '#'))
+# print('makefile'.center(30, '#'))
 # 2. 用makefile的rw方法作为文件对象读写
-nf = newsock.makefile('rw')
-data_str = nf.read(5)
-print(type(data_str), data_str)
-
-nf.write('ACK')
+# nf = newsock.makefile('rw')
+# data_str = nf.read(5)
+# print(type(data_str), data_str)
+#
+# nf.write('ACK')
 
 
 # # 关闭连接
 newsock.close()
 server.close()
-nf.close()
+# nf.close()

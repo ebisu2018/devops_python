@@ -12,46 +12,47 @@ ring3，用户指令，只在用户空间使用
 IO的两个阶段：
 从设备读取数据到内核空间缓冲区
 从内核空间的数据复制到用户空间缓冲区
+这个过程全程阻塞，成为阻塞IO
+内存分为2部分，一部分给内核使用，另一部分给用户态使用
+
+同步异步强调结果
+同步：没有结果则等待
+异步：不等结果并继续做其他事
+
+阻塞非阻塞强调行为，卡没卡主
 
 分类：
-阻塞IO，同步阻塞IO，比如socket的recv，需要多个线程，切换线程代价高
-非阻塞IO，同步非阻塞IO，效率低，总是轮询，少用
+同步阻塞IO：一定要拿到结果才继续，否则一直等待结果而卡主
+同步非阻塞IO：不常用，没有卡主，但要轮询查询结果
+异步阻塞IO：不常用，不等待结果，并且阻塞住
+异步非阻塞IO：不等待结果继续做其他事情，后端返回中间结果，待有结果回调函数返回结果
 IO多路复用，事件驱动IO，重要！
 
+
+
+
 IO多路复用：
-OS代替而不用自己阻塞或者轮询
-事件驱动，如果数据到了会中断
-select可以注册很多事件
+多线程成本高总是反复创建线程，用户不好管理，交给selector
+使用OS提供的功能管理IO
+通过Selector管理多路IO
 
-bio就是同步IO
-aio就是异步IO
+selector，分为select，poll，epoll模型
+让操作系统帮程序监控而不是程序一直阻塞
 
-selector
-让操作系统帮程序盯着而不是程序一直阻塞等待数据
-数据到来会通知程序
+注册IO到selector，进程阻塞，内核监视注册的fd，如果fd的IO有数据，selector返回
+调用read将数据复制到用户空间
 
-需要把socket对象register到selector中
-其中data是一个标识符用来给程序判断用，可以是任意类型
-
-调用select方法开始监听，返回的是列表对象
 每一个item包含fobj，fd，event，data
 fobj就是socket对象
 
 要关注register和select的内容
 只要一个while循环，来循环select中的内容，而recv中不用循环
 
-好处：不用开辟过多的线程，只在主线程即可
-
 '''
 
 import selectors
 import socket
 import threading
-
-server = socket.socket()
-server.bind(('localhost', 9999))
-server.listen()
-server.setblocking(False)
 
 
 # callback
@@ -71,20 +72,27 @@ def accept(s, mask):
     print(k)
 
 
-# 根据操作系统选择合适的selector
-selector = selectors.DefaultSelector()
-print(selector)
-# 向selector注册，返回fobj，fd，events，data标识
-key = selector.register(server, selectors.EVENT_READ | selectors.EVENT_WRITE, accept)
-print(key)
+if __name__ == '__main__':
 
-while True:
-    # 开始让selector代替盯着，如果有一个连接来则立即返回
-    events = selector.select()
-    print('events is', events)
+    server = socket.socket()
+    server.bind(('localhost', 9999))
+    server.listen()
+    server.setblocking(False)
 
-    # key是监听到的对象，可以通过key获取到socket对象然后accept和send
-    for key, mask in events:
-        print(key.fileobj, key.fd)
-        key.data(key.fileobj, mask)
-    print(threading.enumerate())
+    # 根据操作系统选择合适的selector
+    selector = selectors.DefaultSelector()
+
+    # 向selector注册，返回fobj，fd，events，data标识
+    key = selector.register(server, selectors.EVENT_READ | selectors.EVENT_WRITE, accept)
+    print(key)
+
+    while True:
+        # 开始让selector代替盯着，如果有一个连接来则立即返回
+        events = selector.select()
+        print('events is', events)
+
+        # key是监听到的对象，可以通过key获取到socket对象然后accept和send
+        for key, mask in events:
+            print(key.fileobj, key.fd)
+            key.data(key.fileobj, mask)
+        print(threading.enumerate())
