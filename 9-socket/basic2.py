@@ -7,9 +7,6 @@ def acp():
     i = 0
     while True:
         new_sock, raddr = server.accept()  # 阻塞线程，等待连接进来
-        # print(new_sock.getpeername())
-        # print(new_sock.getsockname())
-
         # 把客户端套接字放到子线程中，不会阻塞在IO
         threading.Thread(target=recv, name=f'r{i}', args=(new_sock,)).start()
         i += 1
@@ -27,8 +24,6 @@ def recv(sock):
             sock.send(f'I receive a {data.decode()} data'.encode())
         except Exception as e:
             print(e)
-        finally:
-            sock.close()  # 子进程退出
 
 
 if __name__ == '__main__':
