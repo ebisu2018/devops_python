@@ -41,6 +41,9 @@ if True:
 for i in range(0):
     print(i)
 
+for i in range(-10):
+    print(i)
+
 # 第三个参数指定方向和间隔，负号代表方向
 # for i in range(1, -5, -1):
 #     print(i)
@@ -74,7 +77,7 @@ else:
     print('end')
 
 
-add = "http://c.biancheng.net/python/,http://c.biancheng.net/shell/"
+add = "http://go.org/goroutine,http://python.org/python"
 for i in range(3):
     for j in add:
         if j == ',':
@@ -107,4 +110,5 @@ for i in add:
         continue
     time.sleep(0.1)
     print(i, end="")
-print()
+else:
+    print()
