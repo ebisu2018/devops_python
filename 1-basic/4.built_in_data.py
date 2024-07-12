@@ -7,7 +7,6 @@ python中常用的内建数据类型：
 
 父类都是type类型
 python有隐式类型转换，如整型和浮点型相加得到浮点数
-
 '''
 
 import math
@@ -39,6 +38,3 @@ print(2 ** 0.5, math.sqrt(2))
 # 返回最大值，参数要么是值，要么是可迭代对象
 print(max(1, 2, 4, 8))
 print(max(range(10)))
-
-# 判断类型的内建函数
-print(isinstance(10, int))

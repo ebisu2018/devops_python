@@ -1,10 +1,6 @@
-'''
-
-使用标准库的 collections 模块中的 deque 结构体
-它被设计成在两端存入和读取都很快的特殊list，可以用来实现栈和队列的功能
-效率比list的append要高
-
-'''
+# 使用标准库的 collections 模块中的 deque 结构体
+# 它被设计成在两端存入和读取都很快的特殊list，可以用来实现栈和队列的功能
+# 效率比list的append要高
 
 import collections
 

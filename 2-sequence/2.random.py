@@ -7,7 +7,6 @@ randrange(start, end), 返回[start, end)的随机数
 choice(list), 从列表中随机取出一个元素
 choices(list), 从列表中取出一个或者多个，并用列表返回，默认k是1表示取1个，可以重复取，可以指定权重!
 sample(list), 和choices类似，但是不可以重复采样
-
 '''
 
 import random
