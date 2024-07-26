@@ -1,5 +1,4 @@
 '''
-
 正常情况，解释器是顺序执行代码
 条件判断
 
@@ -21,7 +20,6 @@ else在循环之后正常执行，即使有continue
 
 三元表达式
 exp1 if condition else exp2
-
 '''
 
 import time
@@ -50,6 +48,7 @@ print('range(-)'.center(30, '*'))
 for i in range(1, -5, -1):
     print(i)
 
+
 # for i in range(0, 5, 2):
 #     print(i)
 # for i in range(1, 5, 2):
@@ -71,3 +70,40 @@ for i in range(5):
     print(i)
 else:
     print('end')
+
+
+add = "http://go.org/goroutine,http://python.org/python"
+for i in range(3):
+    for j in add:
+        if j == ',':
+            break
+        time.sleep(0.05)
+        print(j, end="")
+    print("\n跳出内循环")
+
+
+# 提前定义一个 bool 变量，并为其赋初值
+flag = False
+for i in range(3):
+    for j in add:
+        if j == ',':
+            # 在 break 前，修改 flag 的值
+            flag = True
+            break
+        time.sleep(0.05)
+        print(j, end="")
+    print("\n跳出内循环")
+    # 在外层循环体中再次使用 break
+    if flag:
+        print("跳出外层循环")
+        break
+
+
+for i in add:
+    if i == ',':
+        print('\n')
+        continue
+    time.sleep(0.1)
+    print(i, end="")
+else:
+    print()
